@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dqy.helpeachothers.mapper.UserMapper" >
+    <sql id="baseColumnList">
+        id, username, name, phone, sex, headimg, password, role, registertime
+    </sql>
+
+    <sql id="tableName">
+        user
+    </sql>
+
+    <select id="selectRepeat" resultType="com.dqy.helpeachothers.entity.User" >
+        select * from user
+        where
+        <if test="user!=null">
+            <if test="user.username!=null">
+                username = #{user.username}
+            </if>
+            <if test="user.phone!=null">
+                or phone = #{user.phone}
+            </if>
+        </if>
+
+    </select>
+    <insert id="insertAll">
+        <if test="user!=null">
+            INSERT INTO
+            <include refid="tableName"/>
+            ( <include refid="baseColumnList"/> )
+            VALUES
+            (null, #{user.username}, #{user.name}, #{user.phone}, #{user.sex}, #{user.headimg}, #{user.password}, ${user.role}, null  )
+        </if>
+    </insert>
+
+    <select id="login"  resultType="com.dqy.helpeachothers.entity.User" >
+        select * from
+        <include refid="tableName"></include>
+        where
+        <if test="phone!=null">
+           ( phone = #{phone}
+        </if>
+        <if test="password!=null">
+           and   password = #{phone})
+        </if>
+        <if test="phone!=null">
+            or ( username = #{phone}
+        </if>
+        <if test="password!=null">
+            and   password = #{phone} )
+        </if>
+    </select>
+
+    <select id="selectById"  resultType="com.dqy.helpeachothers.entity.User" >
+        select * from
+        <include refid="tableName"></include>
+        where
+        <if test="id!=null">
+            id = ${id}
+        </if>
+    </select>
+
+    <update id="updateHeadImg">
+        <if test="user!=null">
+            update
+            <include refid="tableName"/>
+
+
+            set headimg =#{user.headimg}
+
+            where
+            <if test="user.id">
+                id=${user.id}
+            </if>
+
+        </if>
+
+    </update>
+    <update id="update">
+        <if test="user!=null">
+            update
+            <include refid="tableName"/>
+
+
+            set headimg =#{user.headimg} ,name =#{user.name}, username=#{user.username}, password =#{user.password},phone
+            = #{user.phone} , role =${user.role} ,sex =#{user.sex}
+
+
+            where
+            <if test="user.id">
+                id=${user.id}
+            </if>
+
+        </if>
+    </update>
+</mapper>

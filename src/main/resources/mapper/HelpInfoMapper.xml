@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dqy.helpeachothers.mapper.HelpInfoMapper" >
+    <sql id="tableName">helpinfo${adcode}</sql>
+    <sql id="columnsName">id,adcode,latitude,longitude,detailLocation,message,title,images,emergency,type,state,userid,helperid,okcode,createtime,updatetime</sql>
+
+    <select id="selectByAdcode" resultType="com.dqy.helpeachothers.entity.HelpInfo">
+        select * from <include refid="tableName"><property name="adcode" value="${adcode}"/></include>
+    </select>
+    <select id="selectOkcode" resultType="com.dqy.helpeachothers.entity.HelpInfo">
+        select * from <include refid="tableName"><property name="adcode" value="${adcode}"/></include> where
+        id = ${id} and okcode = #{okcode}
+    </select>
+    <select id="selectByUserIdAndState" resultType="com.dqy.helpeachothers.entity.HelpInfo">
+        select * from <include refid="tableName"><property name="adcode" value="${adcode}"/></include> where
+            userid = ${userid}
+         <if test="state!=0">
+             and state = ${state}
+         </if>
+    </select>
+    <select id="selectByHelperIdAndState" resultType="com.dqy.helpeachothers.entity.HelpInfo">
+        select * from <include refid="tableName"><property name="adcode" value="${adcode}"/></include> where
+        helperid = ${helperid}
+        <if test="state!=0">
+            and state = ${state}
+        </if>
+    </select>
+    <select id="selectById" resultType="com.dqy.helpeachothers.entity.HelpInfo">
+        select * from <include refid="tableName"><property name="adcode" value="${adcode}"/></include> where  id = ${id}
+    </select>
+    <select id="select" resultType="com.dqy.helpeachothers.entity.HelpInfo">
+        select * from <include refid="tableName"><property name="adcode" value="${adcode}"/></include>
+    </select>
+
+    <select id="getByUserIdAndStateCount" resultType="com.dqy.helpeachothers.vo.DataCountVO">
+        select count(1) as count from <include refid="tableName"><property name="adcode" value="${adcode}"/></include>  where userid=${userid} and state =${state}
+    </select>
+    <select id="getByHelperIdAndStateCount" resultType="com.dqy.helpeachothers.vo.DataCountVO">
+        select count(1) as count from <include refid="tableName"><property name="adcode" value="${adcode}"/></include>  where helperid=${helperid} and state =${state}
+    </select>
+    <select id="getCount" resultType="com.dqy.helpeachothers.vo.DataCountVO">
+        select count(1) as count from <include refid="tableName"><property name="adcode" value="${adcode}"/></include>   where state =1 or state =2
+    </select>
+    <select id="selectLimitTo" resultType="com.dqy.helpeachothers.entity.HelpInfo">
+        select * from <include refid="tableName"><property name="adcode" value="${adcode}"/></include> where state =1 or state =2 order by updatetime desc  limit ${limit},${num}
+    </select>
+
+
+    <update id="createTableIfNotExist">
+        CREATE TABLE IF NOT EXISTS <include refid="tableName"><property name="adcode" value="${adcode}"/></include> (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `adcode` varchar(10) NOT NULL,
+            `latitude` double NOT NULL,
+            `longitude` double NOT NULL,
+            `detailLocation` varchar(255) NOT NULL,
+            `message` varchar(500) NOT NULL,
+            `title` varchar(155) NOT NULL,
+            `images` varchar(1000) NOT NULL,
+            `emergency` int(10) NOT NULL,
+            `type` int(10) NOT NULL,
+            `state` int(3) NOT NULL,
+            `userid` int(10) NOT NULL,
+            `helperid` int(10) NOT NULL,
+            `okcode` varchar(255) NOT NULL,
+            `createtime` datetime NOT NULL,
+            `updatetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (`id`),
+            KEY `adcode` (`adcode`,`state`,`userid`,`helperid`,`createtime`,`updatetime`),
+            KEY `emergency` (`emergency`,`type`),
+            KEY `okcode` (`okcode`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+    </update>
+    <update id="setHelp">
+        update <include refid="tableName"><property name="adcode" value="${adcode}"/></include> set state=2,helperid=${helperid},updatetime=null where id =${id}
+    </update>
+    <update id="setCancelByMe">
+        update <include refid="tableName"><property name="adcode" value="${adcode}"/></include> set state=4,updatetime=null where id =${id}
+    </update>
+    <update id="setCancelByHelper">
+        update <include refid="tableName"><property name="adcode" value="${adcode}"/></include> set state=1,helperid=0,updatetime=null where id =${id}
+    </update>
+    <update id="setFinishByHelper">
+        update <include refid="tableName"><property name="adcode" value="${adcode}"/></include> set state=3,updatetime=null where id =${id}
+    </update>
+    <insert id="insert">
+        insert into <include refid="tableName"><property name="adcode" value="${helpinfo.adcode}"/></include>(  <include refid="columnsName"></include>  )
+        values
+        (null,#{helpinfo.adcode},${helpinfo.latitude},${helpinfo.longitude},#{helpinfo.detailLocation},#{helpinfo.message},#{helpinfo.title},#{helpinfo.images},#{helpinfo.emergency},#{helpinfo.type},1,#{helpinfo.userid},0,#{helpinfo.okcode},#{helpinfo.createtime},null)
+    </insert>
+</mapper>

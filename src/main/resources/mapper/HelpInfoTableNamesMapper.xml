@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dqy.helpeachothers.mapper.HelpInfoTableNamesMapper" >
+    <sql id="tableName">helpinfotablenames</sql>
+    <select id="selectByName"  resultType="com.dqy.helpeachothers.entity.HelpInfoTableNames">
+        select * from <include refid="tableName"></include> where name =#{name}
+    </select>
+    <insert id="insert">
+        insert into <include refid="tableName"></include>(id,name,createtime) values (null,#{name},null)
+    </insert>
+</mapper>
