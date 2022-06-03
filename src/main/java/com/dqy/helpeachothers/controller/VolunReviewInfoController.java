@@ -29,4 +29,20 @@ public class VolunReviewInfoController  {
         }
         return returnVO;
     }
+
+    @RequestMapping(value = "/selectByUserId",method = RequestMethod.POST)
+    public ReturnVO selectByUserId( Integer userid){
+        returnVO =new ReturnVO();
+        VolunReviewInfo volunReviewInfo = volunReviewInfoService.getByUserIdNew(userid);
+        if (volunReviewInfo!=null){
+            returnVO.setCode(200);
+            returnVO.setMessage("获得志愿者信息成功");
+            returnVO.setData(volunReviewInfo);
+        }else{
+            returnVO.setCode(500);
+            returnVO.setMessage("获得志愿者信息失败");
+        }
+        return returnVO;
+    }
+
 }
