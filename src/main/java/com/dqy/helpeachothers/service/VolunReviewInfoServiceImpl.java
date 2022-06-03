@@ -6,6 +6,8 @@ import com.dqy.helpeachothers.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class VolunReviewInfoServiceImpl implements VolunReviewInfoService{
     @Autowired
@@ -20,6 +22,12 @@ public class VolunReviewInfoServiceImpl implements VolunReviewInfoService{
 
     @Override
     public VolunReviewInfo getByUserIdNew(Integer userid) {
-        return volunReviewInfoMapper.selectByUserIdOrderByUpdateTime(userid).get(0);
+        List<VolunReviewInfo> volunReviewInfos =volunReviewInfoMapper.selectByUserIdOrderByUpdateTime(userid);
+        if (volunReviewInfos==null||volunReviewInfos.size()==0){
+            return null;
+        }else{
+            return  volunReviewInfos.get(0);
+        }
+
     }
 }
