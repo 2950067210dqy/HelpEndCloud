@@ -65,6 +65,7 @@ public class UserController {
             FullUser fullUser = new FullUser();
             fullUser.setUser(loginUser);
             fullUser.setVolunReviewInfo(volunReviewInfo);
+            System.out.println();
             returnVO.setCode(200);
             returnVO.setMessage("登录成功");
             returnVO.setData(fullUser);
