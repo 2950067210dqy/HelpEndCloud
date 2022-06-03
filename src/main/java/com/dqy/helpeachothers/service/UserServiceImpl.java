@@ -23,6 +23,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public User  selectRepeat(User user){
+        List<User> repeat =userMapper.selectRepeat(user);
+        return repeat.get(0);
+    }
+
+    @Override
     public User login(String phone, String password) {
         List<User> loginUser=userMapper.login(phone,password);
         if (loginUser.size()==0){

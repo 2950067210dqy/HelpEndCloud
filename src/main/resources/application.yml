@@ -12,7 +12,7 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
   web:                                                                                 #springboot 默认访问文件夹路径
     resources:                                                                         #classpath:/META-INF/resources/,
-        static-locations: classpath:/classes!,classpath:/static,classpath:/public,classpath:/resources,classpath:/META-INF/resources,classpath:/,/,
+        static-locations:classpath:/classes!,classpath:/static,classpath:/public,classpath:/resources,classpath:/META-INF/resources,classpath:/,/,
                                            #classpath:/resources/,
                                                                                         #classpath:/static/,
   servlet:

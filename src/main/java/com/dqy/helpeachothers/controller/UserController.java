@@ -1,7 +1,10 @@
 package com.dqy.helpeachothers.controller;
 
+import com.dqy.helpeachothers.entity.FullUser;
 import com.dqy.helpeachothers.entity.User;
+import com.dqy.helpeachothers.entity.VolunReviewInfo;
 import com.dqy.helpeachothers.service.UserService;
+import com.dqy.helpeachothers.service.VolunReviewInfoService;
 import com.dqy.helpeachothers.vo.ReturnVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,7 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     @Autowired
     UserService userService;
-
+    @Autowired
+    VolunReviewInfoService volunReviewInfoService;
     ReturnVO returnVO;
 
     @RequestMapping(value = "/update",method = RequestMethod.POST)
@@ -55,11 +59,15 @@ public class UserController {
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public ReturnVO login( String phone , String password){
         returnVO =new ReturnVO();
-        User loginUser =userService.login(phone,password);
+        User loginUser =userService.login(phone.toString(),password);
         if (loginUser!=null){
+            VolunReviewInfo volunReviewInfo = volunReviewInfoService.getByUserIdNew(loginUser.getId());
+            FullUser fullUser = new FullUser();
+            fullUser.setUser(loginUser);
+            fullUser.setVolunReviewInfo(volunReviewInfo);
             returnVO.setCode(200);
             returnVO.setMessage("登录成功");
-            returnVO.setData(loginUser);
+            returnVO.setData(fullUser);
         }else{
             returnVO.setCode(500);
             returnVO.setMessage("登录失败");
@@ -93,7 +101,9 @@ public class UserController {
             returnVO.setCode(500);
             returnVO.setMessage("注册失败，请重新注册");
         }else{
+            User getUser = userService.selectRepeat(user);
             returnVO.setCode(200);
+            returnVO.setData(getUser);
             returnVO.setMessage("注册成功");
         }
         return  returnVO;

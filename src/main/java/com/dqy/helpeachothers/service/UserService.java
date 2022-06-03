@@ -13,4 +13,5 @@ public interface UserService {
     public Integer update(User user);
 
     public User selectById(Integer id);
+    public User  selectRepeat(User user);
 }

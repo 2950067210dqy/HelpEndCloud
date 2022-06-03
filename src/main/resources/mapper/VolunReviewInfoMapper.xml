@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dqy.helpeachothers.mapper.VolunReviewInfoMapper" >
+    <sql id="tableName">volunreviewinfo</sql>
+    <sql id="baseColumnList">
+        id, userid, reviewstatus, reviewcomment, volumentthink, createtime, updatetime
+    </sql>
+    <select id="selectByUserIdOrderByUpdateTime" resultType="com.dqy.helpeachothers.entity.VolunReviewInfo">
+        select  * from  <include refid="tableName"/>  where userid = ${userid} order by updatetime desc
+    </select>
+    <insert id="insert">
+            INSERT INTO
+            <include refid="tableName"/>
+            ( <include refid="baseColumnList"/> )
+            VALUES
+            (null, #{volunReviewInfo.userid}, #{volunReviewInfo.reviewstatus}, #{volunReviewInfo.reviewcomment}, #{volunReviewInfo.volumentthink}, #{volunReviewInfo.createtime}, null  )
+    </insert>
+</mapper>

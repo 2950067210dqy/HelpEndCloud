@@ -36,18 +36,19 @@
         select * from
         <include refid="tableName"></include>
         where
-        <if test="phone!=null">
-           ( phone = #{phone}
-        </if>
-        <if test="password!=null">
-           and   password = #{phone})
-        </if>
-        <if test="phone!=null">
-            or ( username = #{phone}
-        </if>
-        <if test="password!=null">
-            and   password = #{phone} )
-        </if>
+            password in (select password from user where username =#{phone} or phone =#{phone})
+<!--        <if test="phone!=null">-->
+<!--            ( username = #{phone}-->
+<!--        </if>-->
+<!--        <if test="password!=null">-->
+<!--           and   password = #{phone})-->
+<!--        </if>-->
+<!--        <if test="phone!=null">-->
+<!--            or   ( phone = #{phone}-->
+<!--        </if>-->
+<!--        <if test="password!=null">-->
+<!--            and   password = #{phone} )-->
+<!--        </if>-->
     </select>
 
     <select id="selectById"  resultType="com.dqy.helpeachothers.entity.User" >
