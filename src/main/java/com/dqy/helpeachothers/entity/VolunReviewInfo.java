@@ -22,5 +22,5 @@ public class VolunReviewInfo {
     String reviewstatus;
     String volumentthink;
     Date createtime;
-    Timestamp timestamp;
+    Timestamp updatetime;
 }
