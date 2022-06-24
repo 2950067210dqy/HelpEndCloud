@@ -95,19 +95,14 @@ public class RateByHelpInfoController {
     @RequestMapping(value = "/selectByHelpInfoId",method = RequestMethod.POST)
     public ReturnVO selectByHelpInfoId(Integer helpinfoid,String adcode){
         returnVO = new ReturnVO();
-        List<GetRateByHelpInfo> rateByHelpers =rateByHelpInfoService.selectByHelpInfoId(helpinfoid,adcode);
-        if (rateByHelpers!=null&&rateByHelpers.size()!=0){
+        GetRateByHelpInfo rateByHelpInfo = rateByHelpInfoService.selectByHelpInfoId(helpinfoid,adcode);
+        if (rateByHelpInfo!=null){
             returnVO.setCode(200);
             returnVO.setMessage("查找成功");
-            returnVO.setDatas(Collections.singletonList(rateByHelpers));
+            returnVO.setData(rateByHelpInfo);
         }else{
-            if (rateByHelpers==null){
-                returnVO.setCode(500);
-                returnVO.setMessage("查找失败");
-            }else {
-                returnVO.setCode(500);
-                returnVO.setMessage("查找数据为空");
-            }
+            returnVO.setCode(500);
+            returnVO.setMessage("查找数据失败");
         }
         return  returnVO;
     }

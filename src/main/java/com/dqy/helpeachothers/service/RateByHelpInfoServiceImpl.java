@@ -94,22 +94,20 @@ public class RateByHelpInfoServiceImpl implements RateByHelpInfoService{
     }
 
     @Override
-    public List<GetRateByHelpInfo> selectByHelpInfoId(Integer helpinfoid, String adcode) {
-        List<GetRateByHelpInfo> getRateByHelpInfos = new ArrayList<>();
-        List<RateByHelpInfo> rateByHelpInfos =  rateByHelpInfoMapper.selectByHelpInfoId(helpinfoid,adcode);
-        for (RateByHelpInfo rateByHelpInfo:rateByHelpInfos
-        ) {
+    public GetRateByHelpInfo selectByHelpInfoId(Integer helpinfoid, String adcode) {
+        GetRateByHelpInfo getRateByHelpInfo = null;
+        RateByHelpInfo rateByHelpInfo =  rateByHelpInfoMapper.selectByHelpInfoId( helpinfoid,adcode);
+        if (rateByHelpInfo!=null){
             HelpInfo helpInfo= helpInfoService.getByAdcodeAndIdPure(rateByHelpInfo.getAdcode(),rateByHelpInfo.getHelpinfoid());
             User user = userService.selectById(rateByHelpInfo.getUserid());
             User helper = userService.selectById(rateByHelpInfo.getHelperid());
-            GetRateByHelpInfo getRateByHelpInfo = new GetRateByHelpInfo();
+            getRateByHelpInfo = new GetRateByHelpInfo();
             getRateByHelpInfo.setHelpInfo(helpInfo);
             getRateByHelpInfo.setRateByHelpInfo(rateByHelpInfo);
             getRateByHelpInfo.setUser(user);
             getRateByHelpInfo.setHelper(helper);
-            getRateByHelpInfos.add(getRateByHelpInfo);
         }
-        return  getRateByHelpInfos;
+        return  getRateByHelpInfo;
     }
 
     @Override
