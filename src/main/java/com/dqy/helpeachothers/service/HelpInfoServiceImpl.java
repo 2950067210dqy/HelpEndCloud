@@ -262,6 +262,12 @@ public class HelpInfoServiceImpl implements HelpInfoService{
     }
 
     @Override
+    public HelpInfo getByAdcodeAndIdPure(String adcode, Integer id) {
+        HelpInfo helpInfo=helpInfoMapper.selectById(id,adcode);
+        return helpInfo;
+    }
+
+    @Override
     public List<GetHelpInfo> selectAll() {
         List<GetHelpInfo> datas =  new ArrayList<>();
         //获取所有helpinfo 表名

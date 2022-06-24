@@ -205,7 +205,7 @@ public class HelpInfoController {
     }
 
     @RequestMapping(value = "/getMyIssueEachNum",method = RequestMethod.POST)
-    public ReturnVO etMyIssueEachNum(Integer userid){
+    public ReturnVO getMyIssueEachNum(Integer userid){
             returnVO = new ReturnVO();
             if (userid!=null){
                    User loginUser = userService.selectById(userid);

@@ -46,4 +46,5 @@ public interface HelpInfoMapper {
 
 
     List<HelpInfo> selectByAdcode(@Param("adcode") String adcode);
+
 }
