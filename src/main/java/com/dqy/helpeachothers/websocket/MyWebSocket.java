@@ -88,32 +88,34 @@ public class MyWebSocket {
     @OnMessage
     public void onMessage(String message, Session session) {
         System.out.println("来自客户端的消息:" + message);
+        if (message.trim().equals("@live@")){
+            sendMessageForSelf(session,message.trim());
+        }else{
+            JSONObject jsonObject = JSONObject.parseObject(message);
+            jsonObject.put("message",JSONObject.parseObject(String.valueOf(jsonObject.get("message"))));
+            TalkMessage talkMessage =new TalkMessage();
+            talkMessage.setTouserid(Integer.valueOf((jsonObject.get("touserid").toString())));
+            talkMessage.setFromuserid(Integer.valueOf((jsonObject.get("fromuserid").toString())));
 
-        JSONObject jsonObject = JSONObject.parseObject(message);
-        jsonObject.put("message",JSONObject.parseObject(String.valueOf(jsonObject.get("message"))));
-        TalkMessage talkMessage =new TalkMessage();
-        talkMessage.setTouserid(Integer.valueOf((jsonObject.get("touserid").toString())));
-        talkMessage.setFromuserid(Integer.valueOf((jsonObject.get("fromuserid").toString())));
-
-        Message message1=new Message();
-        JSONObject messageJsonObject = (JSONObject) jsonObject.get("message");
-        message1.setTextMessage((String) messageJsonObject.get("textMessage"));
-        message1.setDataTIme((String) messageJsonObject.get("dataTime"));
-        message1.setMsg_type((String) messageJsonObject .get("msg_type"));
-        message1.setSendImgSrc((String)messageJsonObject .get("sendImgSrc"));
-        message1.setVoiceSrc((String)messageJsonObject .get("voiceSrc"));
-        if (messageJsonObject .get("voiceTime")!=null){
-            message1.setVoiceTime(Integer.valueOf(messageJsonObject .get("voiceTime").toString()));
-        }else {
-            message1.setVoiceTime(0);
-        }
+            Message message1=new Message();
+            JSONObject messageJsonObject = (JSONObject) jsonObject.get("message");
+            message1.setTextMessage((String) messageJsonObject.get("textMessage"));
+            message1.setDataTIme((String) messageJsonObject.get("dataTime"));
+            message1.setMsg_type((String) messageJsonObject .get("msg_type"));
+            message1.setSendImgSrc((String)messageJsonObject .get("sendImgSrc"));
+            message1.setVoiceSrc((String)messageJsonObject .get("voiceSrc"));
+            if (messageJsonObject .get("voiceTime")!=null){
+                message1.setVoiceTime(Integer.valueOf(messageJsonObject .get("voiceTime").toString()));
+            }else {
+                message1.setVoiceTime(0);
+            }
 
 //        message1.setType((Integer) messageJsonObject .get("type"));
-        message1.setType(2);
-        message1.setUserImgSrc((String) messageJsonObject .get("userImgSrc"));
-        talkMessage.setMessage(message1);
-        sendMessageForUser(talkMessage);
-        //        //群发消息
+            message1.setType(2);
+            message1.setUserImgSrc((String) messageJsonObject .get("userImgSrc"));
+            talkMessage.setMessage(message1);
+            sendMessageForUser(talkMessage);
+            //        //群发消息
 //        for (MyWebSocket item : webSocketSet) {
 //            try {
 //                item.sendMessage(message);
@@ -121,7 +123,19 @@ public class MyWebSocket {
 //                e.printStackTrace();
 //            }
 //        }
+        }
+
     }
+
+    //给发消息的用户回消息
+    private void sendMessageForSelf(Session session,String message) {
+        try {
+            session.getBasicRemote().sendText(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     ///给特定的用户发消息
     private void sendMessageForUser(TalkMessage talkMessage) {
         for (Map<Integer, MyWebSocket> item : webSocketSet) {
