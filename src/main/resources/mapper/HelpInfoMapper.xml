@@ -43,13 +43,13 @@
         <where>
             <choose>
                 <when test="state!=0">
-                    state =${state}
+                    state =${state} and
                 </when>
                 <otherwise>
                 </otherwise>
             </choose>
             <if test="searchText!=''">
-                and (
+                 (
                 detailLocation like  '%${searchText}%'   or
                 message like '%${searchText}%' or
                 title like '%${searchText}%'
@@ -74,13 +74,13 @@
         <where>
             <choose>
                 <when test="state!=0">
-                    state =${state}
+                    state =${state} and
                 </when>
                 <otherwise>
                 </otherwise>
             </choose>
             <if test="searchText!=''">
-                and (
+                 (
                 detailLocation like  '%${searchText}%'   or
                 message like '%${searchText}%' or
                 title like '%${searchText}%'
