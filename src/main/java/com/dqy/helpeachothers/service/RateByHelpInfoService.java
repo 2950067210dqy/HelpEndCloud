@@ -16,5 +16,5 @@ public interface RateByHelpInfoService {
 
     List<GetRateByHelpInfo> selectByHelpInfoId(Integer helpinfoid, String adcode);
 
-    Integer insert(RateByHelpInfo rateByHelpeInfo);
+    Integer insert(RateByHelpInfo rateByHelpInfo);
 }

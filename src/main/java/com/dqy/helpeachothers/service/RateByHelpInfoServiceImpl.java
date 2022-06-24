@@ -113,7 +113,7 @@ public class RateByHelpInfoServiceImpl implements RateByHelpInfoService{
     }
 
     @Override
-    public Integer insert(RateByHelpInfo rateByHelpeInfo) {
-        return rateByHelpInfoMapper.insert(rateByHelpeInfo);
+    public Integer insert(RateByHelpInfo rateByHelpInfo) {
+        return rateByHelpInfoMapper.insert(rateByHelpInfo);
     }
 }

@@ -21,6 +21,6 @@
     <insert id="insert">
         insert into <include refid="tableName"></include>(  <include refid="columnsName"></include>  )
         values
-        (null,${rateByHelpeInfo.userid},${rateByHelpeInfo.helperid},${rateByHelpeInfo.helpinfoid},#{rateByHelpeInfo.adcode},${rateByHelpeInfo.serverate},${rateByHelpeInfo.ontimerate},${rateByHelpeInfo.mannerrate},${rateByHelpeInfo.politerate},${rateByHelpeInfo.clotherate},null)
+        (null,${rateByHelpInfo.userid},${rateByHelpInfo.helperid},${rateByHelpInfo.helpinfoid},#{rateByHelpInfo.adcode},${rateByHelpInfo.serverate},${rateByHelpInfo.ontimerate},${rateByHelpInfo.mannerrate},${rateByHelpInfo.politerate},${rateByHelpInfo.clotherate},null)
     </insert>
 </mapper>

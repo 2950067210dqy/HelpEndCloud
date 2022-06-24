@@ -112,9 +112,9 @@ public class RateByHelpInfoController {
         return  returnVO;
     }
     @RequestMapping(value = "/insert",method = RequestMethod.POST)
-    public ReturnVO insert(@RequestBody RateByHelpInfo rateByHelpeInfo){
+    public ReturnVO insert(@RequestBody RateByHelpInfo rateByHelpInfo){
         returnVO = new ReturnVO();
-        Integer result = rateByHelpInfoService.insert(rateByHelpeInfo);
+        Integer result = rateByHelpInfoService.insert(rateByHelpInfo);
         if (result>0){
             returnVO.setCode(200);
             returnVO.setMessage("添加成功");
