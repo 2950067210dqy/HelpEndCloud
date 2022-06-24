@@ -93,9 +93,9 @@ public class RateByHelpInfoController {
         return  returnVO;
     }
     @RequestMapping(value = "/selectByHelpInfoId",method = RequestMethod.POST)
-    public ReturnVO selectByHelpInfoId(Integer helpinfoid){
+    public ReturnVO selectByHelpInfoId(Integer helpinfoid,String adcode){
         returnVO = new ReturnVO();
-        List<GetRateByHelpInfo> rateByHelpers =rateByHelpInfoService.selectByHelpInfoId(helpinfoid);
+        List<GetRateByHelpInfo> rateByHelpers =rateByHelpInfoService.selectByHelpInfoId(helpinfoid,adcode);
         if (rateByHelpers!=null&&rateByHelpers.size()!=0){
             returnVO.setCode(200);
             returnVO.setMessage("查找成功");

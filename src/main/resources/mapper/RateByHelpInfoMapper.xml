@@ -16,7 +16,7 @@
         select * from <include refid="tableName"></include> where helperid =  ${helperid}
     </select>
     <select id="selectByHelpInfoId" resultType="com.dqy.helpeachothers.entity.RateByHelpInfo">
-        select * from <include refid="tableName"></include> where helpinfoid =  ${helpinfoid}
+        select * from <include refid="tableName"></include> where helpinfoid =  ${helpinfoid} and adcode = #{adcode}
     </select>
     <insert id="insert">
         insert into <include refid="tableName"></include>(  <include refid="columnsName"></include>  )

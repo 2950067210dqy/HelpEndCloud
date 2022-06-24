@@ -15,7 +15,7 @@ public interface RateByHelpInfoMapper {
 
     List<RateByHelpInfo> selectByUserId(@Param("userid") Integer userid);
 
-    List<RateByHelpInfo> selectByHelpInfoId(@Param("helpinfoid") Integer helpinfoid);
+    List<RateByHelpInfo> selectByHelpInfoId(@Param("helpinfoid") Integer helpinfoid, @Param("adcode") String adcode);
 
     List<RateByHelpInfo> selectByHelperId(@Param("helperid") Integer helperid);
 

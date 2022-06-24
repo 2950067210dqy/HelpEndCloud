@@ -94,9 +94,9 @@ public class RateByHelpInfoServiceImpl implements RateByHelpInfoService{
     }
 
     @Override
-    public List<GetRateByHelpInfo> selectByHelpInfoId(Integer helpinfoid) {
+    public List<GetRateByHelpInfo> selectByHelpInfoId(Integer helpinfoid, String adcode) {
         List<GetRateByHelpInfo> getRateByHelpInfos = new ArrayList<>();
-        List<RateByHelpInfo> rateByHelpInfos =  rateByHelpInfoMapper.selectByHelpInfoId(helpinfoid);
+        List<RateByHelpInfo> rateByHelpInfos =  rateByHelpInfoMapper.selectByHelpInfoId(helpinfoid,adcode);
         for (RateByHelpInfo rateByHelpInfo:rateByHelpInfos
         ) {
             HelpInfo helpInfo= helpInfoService.getByAdcodeAndIdPure(rateByHelpInfo.getAdcode(),rateByHelpInfo.getHelpinfoid());
