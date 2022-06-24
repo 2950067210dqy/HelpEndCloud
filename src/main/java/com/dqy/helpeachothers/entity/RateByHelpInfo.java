@@ -19,11 +19,11 @@ public class RateByHelpInfo {
     Integer helperid;
     Integer helpinfoid;
     String adcode;
-    Integer serverate;
-    Integer ontimerate;
-    Integer mannerrate;
-    Integer politerate;
-    Integer clotherate;
+    Float serverate;
+    Float ontimerate;
+    Float mannerrate;
+    Float politerate;
+    Float clotherate;
     Timestamp createtime;
 
 

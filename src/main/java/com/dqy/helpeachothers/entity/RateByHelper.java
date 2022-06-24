@@ -16,11 +16,11 @@ import java.sql.Timestamp;
 public class RateByHelper {
     Integer id;
     Integer userid;
-    Integer serverate;
-    Integer ontimerate;
-    Integer mannerrate;
-    Integer politerate;
-    Integer clotherate;
+    Float serverate;
+    Float ontimerate;
+    Float mannerrate;
+    Float politerate;
+    Float clotherate;
     Integer humannum;
     Timestamp updatetime;
 }
