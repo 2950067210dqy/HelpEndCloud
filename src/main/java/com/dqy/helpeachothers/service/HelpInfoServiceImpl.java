@@ -296,12 +296,12 @@ public class HelpInfoServiceImpl implements HelpInfoService{
 
 
     @Override
-    public  GetHelpInfoVO getByPage(Integer currentPage, String adcode) {
+    public  GetHelpInfoVO getByPage(Integer currentPage, String adcode, String searchText, String orderBy, String descOrAsc, String fromTime, String toTime, Integer state, Integer type, Integer emergency) {
         getHelpInfoVO = new GetHelpInfoVO();
         helpInfoPageUtil = new HelpInfoPageUtil();
         Boolean isCreate =createTableAndStoreTableName( adcode);
        if (isCreate){
-           helpInfoPageUtil.setDataNums(helpInfoMapper.getCount(adcode).getCount());
+           helpInfoPageUtil.setDataNums(helpInfoMapper.getCount(adcode,searchText,orderBy,descOrAsc,fromTime,toTime,state,type,emergency).getCount());
            if (helpInfoPageUtil.getDataNums()>0){
                helpInfoPageUtil.setPageNums(helpInfoPageUtil.getDataNums()/helpInfoPageUtil.getPerPageNum()+(helpInfoPageUtil.getDataNums()%helpInfoPageUtil.getPerPageNum()==0?0:1));
            }else{
@@ -320,7 +320,8 @@ public class HelpInfoServiceImpl implements HelpInfoService{
            if (limit+num>helpInfoPageUtil.getDataNums()) {
                num = helpInfoPageUtil.getDataNums() - limit;
            }
-           List<HelpInfo> helpInfos=helpInfoMapper.selectLimitTo(limit,num,adcode);
+
+           List<HelpInfo> helpInfos=helpInfoMapper.selectLimitTo(limit,num,adcode,searchText,orderBy,descOrAsc,fromTime,toTime,state,type,emergency);
            List<GetHelpInfo> datas =  new ArrayList<>();
            for (HelpInfo h:helpInfos
            ) {

@@ -10,8 +10,17 @@ import java.util.List;
 @Mapper
 public interface HelpInfoMapper {
 
-    DataCountVO getCount(@Param("adcode") String adcode);
-    List<HelpInfo> selectLimitTo(@Param("limit")Integer limit ,@Param("num") Integer num ,@Param("adcode") String adcode);
+    DataCountVO getCount(@Param("adcode") String adcode, @Param("searchText") String searchText,
+                         @Param("orderBy")String orderBy, @Param("descOrAsc") String descOrAsc,
+                         @Param("fromTime")String fromTime, @Param("toTime")String toTime,
+                         @Param("state") Integer state, @Param("type") Integer type,
+                         @Param("emergency") Integer emergency);
+    List<HelpInfo> selectLimitTo(@Param("limit") Integer limit, @Param("num") Integer num,
+                                 @Param("adcode") String adcode, @Param("searchText") String searchText,
+                                 @Param("orderBy")String orderBy, @Param("descOrAsc") String descOrAsc,
+                                 @Param("fromTime")String fromTime, @Param("toTime")String toTime,
+                                 @Param("state") Integer state, @Param("type") Integer type,
+                                 @Param("emergency") Integer emergency);
     //createTable if not exist
     Boolean createTableIfNotExist(@Param("adcode") String adcode);
     //插入

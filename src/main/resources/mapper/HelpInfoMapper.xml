@@ -39,10 +39,67 @@
         select count(1) as count from <include refid="tableName"><property name="adcode" value="${adcode}"/></include>  where helperid=${helperid} and state =${state}
     </select>
     <select id="getCount" resultType="com.dqy.helpeachothers.vo.DataCountVO">
-        select count(1) as count from <include refid="tableName"><property name="adcode" value="${adcode}"/></include>   where state =1 or state =2
+        select count(1) as count from <include refid="tableName"><property name="adcode" value="${adcode}"/></include>
+        <where>
+            <choose>
+                <when test="state!=0">
+                    state =${state}
+                </when>
+                <otherwise>
+                    (state =1 or state =2)
+                </otherwise>
+            </choose>
+            <if test="searchText!=''">
+                and (
+                detailLocation like  '%${searchText}%'   or
+                message like '%${searchText}%' or
+                title like '%${searchText}%'
+                )
+            </if>
+            <if test="type!=0">
+                and type =${type}
+            </if>
+            <if test="emergency!=0">
+                and emergency =${emergency}
+            </if>
+            <if test="fromTime!='' and toTime!=''">
+                and updatetime between #{fromTime} and #{toTime}
+            </if>
+        </where>
+
+
+
     </select>
     <select id="selectLimitTo" resultType="com.dqy.helpeachothers.entity.HelpInfo">
-        select * from <include refid="tableName"><property name="adcode" value="${adcode}"/></include> where state =1 or state =2 order by updatetime desc  limit ${limit},${num}
+        select * from <include refid="tableName"><property name="adcode" value="${adcode}"/></include>
+        <where>
+            <choose>
+                <when test="state!=0">
+                    state =${state}
+                </when>
+                <otherwise>
+                    (state =1 or state =2)
+                </otherwise>
+            </choose>
+            <if test="searchText!=''">
+                and (
+                detailLocation like  '%${searchText}%'   or
+                message like '%${searchText}%' or
+                title like '%${searchText}%'
+                )
+            </if>
+            <if test="type!=0">
+                and type =${type}
+            </if>
+            <if test="emergency!=0">
+                and emergency =${emergency}
+            </if>
+            <if test="fromTime!='' and toTime!=''">
+                and updatetime between #{fromTime} and #{toTime}
+            </if>
+                order  by   ${orderBy}    ${descOrAsc}   limit   ${limit},${num}
+        </where>
+
     </select>
 
 

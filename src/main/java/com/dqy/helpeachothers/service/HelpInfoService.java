@@ -15,7 +15,7 @@ public interface HelpInfoService {
 
     //  list[0]装载 分页工具类 HelpInfoPageUtil
     // list[1]装载数据
-    GetHelpInfoVO getByPage(Integer currentPage, String adcode);
+    GetHelpInfoVO getByPage(Integer currentPage, String adcode, String searchText, String orderBy, String descOrAsc, String fromTime, String toTime, Integer state, Integer type, Integer emergency);
 
     SetHelp setHelp(Integer helpInfoId, User helpUser,String adcode);
 

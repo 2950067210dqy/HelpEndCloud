@@ -8,7 +8,9 @@ import com.dqy.helpeachothers.service.UserService;
 import com.dqy.helpeachothers.vo.GetHelpInfoVO;
 import com.dqy.helpeachothers.vo.ReturnVO;
 import com.dqy.helpeachothers.vo.SetHelpInfoVO;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -331,10 +333,15 @@ public class HelpInfoController {
     }
 
     @RequestMapping(value = "/get",method = RequestMethod.POST)
-    public ReturnVO get(Integer currentPage,String adcode){
+    public ReturnVO get(Integer currentPage,String adcode,
+                        @RequestParam(required = false,defaultValue = "") String searchText,@RequestParam(required = false,defaultValue = "updateTime") String orderBy,
+                        @RequestParam(required = false,defaultValue = "desc") String descOrAsc,@RequestParam(required = false,defaultValue = "") String fromTime,
+                        @RequestParam(required = false,defaultValue = "") String toTime, @RequestParam(required = false,defaultValue = "0") Integer state,
+                        @RequestParam(required = false,defaultValue = "0") Integer type,@RequestParam(required = false,defaultValue = "0") Integer emergency
+                        ){
         returnVO = new ReturnVO();
         getHelpInfoVO=new GetHelpInfoVO();
-        getHelpInfoVO=helpInfoService.getByPage(currentPage,adcode);
+        getHelpInfoVO=helpInfoService.getByPage(currentPage,adcode,searchText,orderBy,descOrAsc,fromTime,toTime,state,type,emergency);
         if (getHelpInfoVO!=null&&getHelpInfoVO.getDatas()!=null&&getHelpInfoVO.getDatas().size()>0){
             returnVO.setCode(200);
             returnVO.setMessage("查询成功！");
