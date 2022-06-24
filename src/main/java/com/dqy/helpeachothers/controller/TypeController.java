@@ -25,24 +25,20 @@ public class TypeController {
     ReturnVO returnVO;
 
     @RequestMapping(value = "/getType",method = RequestMethod.POST)
-    public ReturnVO getType(@RequestBody User user){
+    public ReturnVO getType(){
         returnVO =new ReturnVO();
-        User correctUser=userService.selectById(user.getId());
-        if (correctUser!=null){
-            List<Type> typeList = typeService.getType();
-            if (typeList.size()==0){
-                returnVO.setCode(500);
-                returnVO.setMessage("获取类型空或失败！");
-            }else{
-                returnVO.setCode(200);
-                returnVO.setMessage("获取类型成功！");
-                returnVO.setDatas(Collections.singletonList(typeList));
-            }
 
-        }else{
+        List<Type> typeList = typeService.getType();
+        if (typeList.size()==0){
             returnVO.setCode(500);
-            returnVO.setMessage("前台用户校验失败！");
+            returnVO.setMessage("获取类型空或失败！");
+        }else{
+            returnVO.setCode(200);
+            returnVO.setMessage("获取类型成功！");
+            returnVO.setDatas(Collections.singletonList(typeList));
         }
+
+
         return returnVO;
     }
 }

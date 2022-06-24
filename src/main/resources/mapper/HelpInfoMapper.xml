@@ -46,7 +46,7 @@
                     state =${state}
                 </when>
                 <otherwise>
-                    (state =1 or state =2)
+--                     (state =1 or state =2)
                 </otherwise>
             </choose>
             <if test="searchText!=''">
@@ -78,7 +78,7 @@
                     state =${state}
                 </when>
                 <otherwise>
-                    (state =1 or state =2)
+--                     (state =1 or state =2)
                 </otherwise>
             </choose>
             <if test="searchText!=''">

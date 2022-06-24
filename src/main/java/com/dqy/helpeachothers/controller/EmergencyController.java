@@ -24,24 +24,20 @@ public class EmergencyController {
     ReturnVO returnVO;
 
     @RequestMapping(value = "/getEmergency",method = RequestMethod.POST)
-    public ReturnVO getType(@RequestBody User user){
+    public ReturnVO getType(){
         returnVO =new ReturnVO();
-        User correctUser=userService.selectById(user.getId());
-        if (correctUser!=null){
-            List<Emergency> emergencyList = emergencyService.getEmergency();
-            if (emergencyList .size()==0){
-                returnVO.setCode(500);
-                returnVO.setMessage("获取紧急程度类型空或失败！");
-            }else{
-                returnVO.setCode(200);
-                returnVO.setMessage("获取紧急程度类型成功！");
-                returnVO.setDatas(Collections.singletonList(emergencyList ));
-            }
 
-        }else{
+        List<Emergency> emergencyList = emergencyService.getEmergency();
+        if (emergencyList .size()==0){
             returnVO.setCode(500);
-            returnVO.setMessage("前台用户校验失败！");
+            returnVO.setMessage("获取紧急程度类型空或失败！");
+        }else{
+            returnVO.setCode(200);
+            returnVO.setMessage("获取紧急程度类型成功！");
+            returnVO.setDatas(Collections.singletonList(emergencyList ));
         }
+
+
         return returnVO;
     }
 }
