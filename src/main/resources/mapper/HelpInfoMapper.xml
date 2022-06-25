@@ -9,7 +9,7 @@
     </select>
     <select id="selectOkcode" resultType="com.dqy.helpeachothers.entity.HelpInfo">
         select * from <include refid="tableName"><property name="adcode" value="${adcode}"/></include> where
-        id = ${id} and okcode = #{okcode}
+        id = ${id} and okcode like '%${okcode}%'
     </select>
     <select id="selectByUserIdAndState" resultType="com.dqy.helpeachothers.entity.HelpInfo">
         select * from <include refid="tableName"><property name="adcode" value="${adcode}"/></include> where
