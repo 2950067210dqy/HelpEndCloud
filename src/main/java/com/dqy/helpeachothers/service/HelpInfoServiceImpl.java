@@ -236,34 +236,43 @@ public class HelpInfoServiceImpl implements HelpInfoService{
 
     @Override
     public List<GetHelpInfo> getByAdcode(String adcode) {
-        List<HelpInfo> helpInfos=helpInfoMapper.selectByAdcode(adcode);
-        List<GetHelpInfo> datas =  new ArrayList<>();
-        for (HelpInfo h:helpInfos
-        ) {
-            GetHelpInfo getHelpInfo = new GetHelpInfo();
-            getHelpInfo.setId(h.getId());
-            getHelpInfo.setAdcode(h.getAdcode());
-            getHelpInfo.setLatitude(h.getLatitude());
-            getHelpInfo.setLongitude(h.getLongitude());
-            getHelpInfo.setDetailLocation(h.getDetailLocation());
-            getHelpInfo.setMessage(h.getMessage());
-            getHelpInfo.setTitle(h.getTitle());
-            getHelpInfo.setImages(Arrays.asList(h.getImages().split(",")));
-            getHelpInfo.setCreatetime(h.getCreatetime());
-            getHelpInfo.setUpdatetime(h.getUpdatetime());
-            getHelpInfo.setEmergency(emergencyService.selectById(h.getEmergency()));
-            getHelpInfo.setType(typeService.selectById(h.getType()));
-            getHelpInfo.setState(stateService.selectById(h.getState()));
-            getHelpInfo.setUser(userService.selectById(h.getUserid()));
-            getHelpInfo.setHelpUser(userService.selectById(h.getHelperid()));
-            datas.add(getHelpInfo);
+        List<GetHelpInfo> datas=null;
+        Boolean isCreate =createTableAndStoreTableName( adcode);
+        if (isCreate) {
+            List<HelpInfo> helpInfos=helpInfoMapper.selectByAdcode(adcode);
+            datas =  new ArrayList<>();
+            for (HelpInfo h:helpInfos
+            ) {
+                GetHelpInfo getHelpInfo = new GetHelpInfo();
+                getHelpInfo.setId(h.getId());
+                getHelpInfo.setAdcode(h.getAdcode());
+                getHelpInfo.setLatitude(h.getLatitude());
+                getHelpInfo.setLongitude(h.getLongitude());
+                getHelpInfo.setDetailLocation(h.getDetailLocation());
+                getHelpInfo.setMessage(h.getMessage());
+                getHelpInfo.setTitle(h.getTitle());
+                getHelpInfo.setImages(Arrays.asList(h.getImages().split(",")));
+                getHelpInfo.setCreatetime(h.getCreatetime());
+                getHelpInfo.setUpdatetime(h.getUpdatetime());
+                getHelpInfo.setEmergency(emergencyService.selectById(h.getEmergency()));
+                getHelpInfo.setType(typeService.selectById(h.getType()));
+                getHelpInfo.setState(stateService.selectById(h.getState()));
+                getHelpInfo.setUser(userService.selectById(h.getUserid()));
+                getHelpInfo.setHelpUser(userService.selectById(h.getHelperid()));
+                datas.add(getHelpInfo);
+            }
         }
+
         return datas;
     }
 
     @Override
     public HelpInfo getByAdcodeAndIdPure(String adcode, Integer id) {
-        HelpInfo helpInfo=helpInfoMapper.selectById(id,adcode);
+        HelpInfo helpInfo=null;
+        Boolean isCreate =createTableAndStoreTableName( adcode);
+        if (isCreate) {
+            helpInfo = helpInfoMapper.selectById(id, adcode);
+        }
         return helpInfo;
     }
 
