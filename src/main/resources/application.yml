@@ -1,7 +1,7 @@
 
 spring:
   profiles:
-    active: run_server
+    active: dev
 #  mvc:
 #    # 静态文件存放                                                                   #springboot 默认 / 下访问
 #    static-path-pattern: /static/
