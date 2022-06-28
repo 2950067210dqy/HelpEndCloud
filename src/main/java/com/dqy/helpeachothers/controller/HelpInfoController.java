@@ -31,7 +31,23 @@ public class HelpInfoController {
     GetHelpInfoVO getHelpInfoVO;
     ReturnVO returnVO;
 
+    @RequestMapping(value = "/selectByIdAndAdcode",method = RequestMethod.POST)
+    public ReturnVO selectByIdAndAdcode(Integer id,String adcode){
+        returnVO = new ReturnVO();
+        GetHelpInfo data=null;
+        data=helpInfoService.getByAdcodeAndId(adcode,id);
+        if (data!=null){
+            returnVO.setCode(200);
+            returnVO.setMessage("查询成功！");
+            returnVO.setData(data);
+            return  returnVO;
+        }else{
+            returnVO.setCode(500);
+            returnVO.setMessage("查询数据为空");
+            return returnVO;
 
+        }
+    }
 
     @RequestMapping(value = "/selectAll",method = RequestMethod.POST)
     public  ReturnVO selectAll(){

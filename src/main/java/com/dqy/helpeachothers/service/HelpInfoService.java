@@ -41,6 +41,6 @@ public interface HelpInfoService {
     List<GetHelpInfo> getByAdcode(String adcode);
 
     HelpInfo getByAdcodeAndIdPure(String adcode ,Integer id);
-
+    GetHelpInfo  getByAdcodeAndId(String adcode ,Integer id);
     List<GetHelpInfo> selectAll();
 }

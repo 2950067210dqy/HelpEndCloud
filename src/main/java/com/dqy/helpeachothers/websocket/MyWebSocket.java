@@ -147,6 +147,8 @@ public class MyWebSocket {
                     e.printStackTrace();
                 }
             }
+
+
         }
     }
 
@@ -167,7 +169,7 @@ public class MyWebSocket {
 //            try {
 //                item.sendMessage(message);
 //            } catch (IOException e) {
-//                continue;
+//                ik
 //            }
 //        }
 //    }

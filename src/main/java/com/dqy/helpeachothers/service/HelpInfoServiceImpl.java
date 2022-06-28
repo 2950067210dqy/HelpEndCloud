@@ -277,6 +277,36 @@ public class HelpInfoServiceImpl implements HelpInfoService{
     }
 
     @Override
+    public GetHelpInfo getByAdcodeAndId(String adcode, Integer id) {
+        GetHelpInfo getHelpInfo=null;
+        Boolean isCreate =createTableAndStoreTableName( adcode);
+        if (isCreate) {
+            HelpInfo h=helpInfoMapper.selectById(id,adcode);
+            if (h!=null){
+                getHelpInfo = new GetHelpInfo();
+                getHelpInfo.setId(h.getId());
+                getHelpInfo.setAdcode(h.getAdcode());
+                getHelpInfo.setLatitude(h.getLatitude());
+                getHelpInfo.setLongitude(h.getLongitude());
+                getHelpInfo.setDetailLocation(h.getDetailLocation());
+                getHelpInfo.setMessage(h.getMessage());
+                getHelpInfo.setTitle(h.getTitle());
+                getHelpInfo.setImages(Arrays.asList(h.getImages().split(",")));
+                getHelpInfo.setCreatetime(h.getCreatetime());
+                getHelpInfo.setUpdatetime(h.getUpdatetime());
+                getHelpInfo.setEmergency(emergencyService.selectById(h.getEmergency()));
+                getHelpInfo.setType(typeService.selectById(h.getType()));
+                getHelpInfo.setState(stateService.selectById(h.getState()));
+                getHelpInfo.setUser(userService.selectById(h.getUserid()));
+                getHelpInfo.setHelpUser(userService.selectById(h.getHelperid()));
+            }
+
+        }
+
+        return getHelpInfo;
+    }
+
+    @Override
     public List<GetHelpInfo> selectAll() {
         List<GetHelpInfo> datas =  new ArrayList<>();
         //获取所有helpinfo 表名
