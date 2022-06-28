@@ -34,6 +34,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public User selectByUsername(User temptUser) {
+        User user =userMapper.selectByUsername(temptUser);
+        return user;
+    }
+
+    @Override
     public User login(String phone, String password) {
         List<User> loginUser=userMapper.login(phone,password);
         if (loginUser.size()==0){

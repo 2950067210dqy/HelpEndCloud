@@ -22,7 +22,7 @@ public class HttpClient {
      * @param params  方法参数
      * @return
      */
-    public Object client(String url, HttpMethod method, MultiValueMap<String,String> params){
+    public JSONObject client(String url, HttpMethod method, MultiValueMap<String,String> params){
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/x-www-form-urlencoded");
@@ -30,7 +30,7 @@ public class HttpClient {
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(url,httpEntity,String.class);
         String body = responseEntity.getBody();
         JSONObject jsonObject = JSONObject.parseObject(body);
-        return jsonObject.get("data");
+        return jsonObject;
     }
 
     /**
@@ -40,7 +40,7 @@ public class HttpClient {
      * @aram params  方法参数
      * @eturn
      */
-    public Object clientJson(String url, HttpMethod method, Map<String,Object> params){
+    public JSONObject clientJson(String url, HttpMethod method, Map<String,Object> params){
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
@@ -49,6 +49,6 @@ public class HttpClient {
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(url,httpEntity,String.class);
         String body = responseEntity.getBody();
         JSONObject jsonObjectResult = JSONObject.parseObject(body);
-        return jsonObjectResult.get("data");
+        return jsonObjectResult;
     }
 }

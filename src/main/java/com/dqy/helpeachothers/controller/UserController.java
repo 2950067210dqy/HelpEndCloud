@@ -1,5 +1,6 @@
 package com.dqy.helpeachothers.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.dqy.helpeachothers.entity.*;
 import com.dqy.helpeachothers.service.UserService;
 import com.dqy.helpeachothers.service.VolunReviewInfoService;
@@ -96,15 +97,20 @@ public class UserController {
         param.add("secret",secretid);
         param.add("js_code",user.getCode());
         param.add("grant_type","authorization_code");
-        WxReturnUser wxReturnUser= (WxReturnUser) httpClient.client(
-          "https://api.weixin.qq.com/sns/jscode2session",
-                HttpMethod.GET,
-                param
-        );
-        if (wxReturnUser.getErrcode()==0){
+        try {
+            JSONObject object=  httpClient.client(
+              "https://api.weixin.qq.com/sns/jscode2session",
+                    HttpMethod.GET,
+                    param
+            );
+            WxReturnUser wxReturnUser = new WxReturnUser();
+            wxReturnUser.setUnionid((String) object.get("unionid"));
+            wxReturnUser.setOpenid((String) object.get("openid"));
+            wxReturnUser.setSession_key((String) object.get("session_key"));
+
             User temptUser = new User();
             temptUser.setUsername(wxReturnUser.getOpenid());
-            User loginUser =userService.selectRepeat(temptUser);
+            User loginUser =userService.selectByUsername(temptUser);
             if (loginUser!=null){
                 VolunReviewInfo volunReviewInfo = volunReviewInfoService.getByUserIdNew(loginUser.getId());
                 FullUser fullUser = new FullUser();
@@ -124,22 +130,23 @@ public class UserController {
                 storeUser.setSex(user.getSex());
                 Integer result =userService.insert(storeUser);
                 if(result>0){
-                    loginUser= userService.selectRepeat(loginUser);
+                    loginUser= userService.selectByUsername(temptUser);
                     VolunReviewInfo volunReviewInfo = volunReviewInfoService.getByUserIdNew(loginUser.getId());
                     FullUser fullUser = new FullUser();
                     fullUser.setUser(loginUser);
                     fullUser.setVolunReviewInfo(volunReviewInfo);
                     returnVO.setCode(200);
-                    returnVO.setMessage("登录成功");
+                    returnVO.setMessage("注册成功");
                     returnVO.setData(fullUser);
                 }else{
                     returnVO.setCode(500);
-                    returnVO.setMessage("注册失败:");
+                    returnVO.setMessage("注册失败");
                 }
             }
-        }else{
+        }catch (Exception e){
             returnVO.setCode(500);
-            returnVO.setMessage("登录失败:"+wxReturnUser.getErrmsg());
+            e.printStackTrace();
+            returnVO.setMessage("登录失败:"+e);
         }
 
         return  returnVO;

@@ -47,7 +47,14 @@
             id = ${id}
         </if>
     </select>
-
+    <select id="selectByUsername"  resultType="com.dqy.helpeachothers.entity.User" >
+        select * from
+        <include refid="tableName"></include>
+        where
+        <if test="user.username!=''">
+            username = #{user.username}
+        </if>
+    </select>
     <update id="updateHeadImg">
         <if test="user!=null">
             update

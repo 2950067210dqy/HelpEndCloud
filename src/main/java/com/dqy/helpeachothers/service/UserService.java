@@ -14,4 +14,6 @@ public interface UserService {
 
     public User selectById(Integer id);
     public User  selectRepeat(User user);
+
+    User selectByUsername(User temptUser);
 }

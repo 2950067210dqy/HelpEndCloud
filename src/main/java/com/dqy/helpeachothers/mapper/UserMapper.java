@@ -32,4 +32,6 @@ public interface UserMapper {
 
     //根据id查找用户
     User selectById(@Param("id")Integer id);
+
+    User selectByUsername(@Param("user")User user);
 }
