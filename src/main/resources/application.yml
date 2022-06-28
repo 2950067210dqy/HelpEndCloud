@@ -26,7 +26,8 @@ spring:
   #/：当前项目的根路径
 dqy:
   address: "http://127.0.0.1:8085/"
-
+  wx-appid: "wxf808adf9ed2b78c7"
+  wx-secretid: "b73700ab6994098cb701cd47b17dc1a0"
 server:
   servlet:
     # session 30

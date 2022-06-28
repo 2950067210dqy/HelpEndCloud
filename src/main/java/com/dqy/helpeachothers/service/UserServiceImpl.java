@@ -21,7 +21,12 @@ public class UserServiceImpl implements UserService{
                return -1;
            }
     }
+    @Override
+    public Integer insert(User user) {
+            Integer result=userMapper.insertAll(user);
+            return result;
 
+    }
     @Override
     public User  selectRepeat(User user){
         List<User> repeat =userMapper.selectRepeat(user);
